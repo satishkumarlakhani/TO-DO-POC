@@ -1,0 +1,198 @@
+* {
+    padding: 0;
+    margin: 0;
+    /* color: white; */
+}
+
+.container {
+    max-width:900px   ;
+    margin: 0px auto;
+    background-image: linear-gradient(to bottom right, rgba(189, 136, 136, 0.38), rgba(61, 158, 97, 0.203));
+    min-height: 100vh;
+}
+
+.header {
+    text-align: center;
+    background-color: #64b5f6;
+    padding: 20px;
+    color: aliceblue;
+
+}
+.inputfield{
+    text-align: center;
+    padding: 30px;
+}
+input {
+    padding: 12px;
+   width: 400px;
+    border: none;
+    border: 2px solid #1079cf;
+}
+input:hover {
+    border: 2px solid #5596ca;
+    
+}
+
+
+
+.completed {
+    text-decoration: line-through;
+}
+
+.reguler_task,
+.completed_task {
+    height: auto;
+    /* overflow: scroll; */
+    margin: 10px 20px;
+    width: 350px;
+
+    
+    
+}
+.reguler_task h1{
+    color:#BD2031 ;
+    text-align: center;
+    font-size: 25px;
+}
+.completed_task h1{
+    color:#1a470f ;
+    font-size: 25px;
+    text-align: center;
+}
+
+.todo {
+    width: 90%;
+    margin: 1rem auto;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+}
+
+.todo_items {
+    position: relative;
+}
+
+
+ul li {
+
+    list-style: none;
+    padding: 20px 10px;
+    background: #FFF;
+    margin-top: 15px;
+    /* color: aliceblue; */
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    transition: width 2s, height 4s;
+}
+
+
+#myUl {
+    color: red;
+}
+#myUl li:hover {
+    color: black;
+    transition: 0.5s all ease-in-out;
+    box-shadow: 0 2px 6px 0 rgba(215, 91, 91, 0.2), 0 6px 10px 0 rgba(196, 45, 45, 0.501);
+    transition: 0.5s all ease-in-out;
+}
+
+#myUl1 {
+    color: rgb(69, 209, 38);
+    
+}
+#myUl1 li:hover{
+    color: black;
+    transition: 0.5s all ease-in-out;
+    box-shadow: 0 2px 6px 0 rgba(147, 215, 91, 0.2), 0 6px 10px 0 rgba(98, 196, 45, 0.501);
+    transition: 0.5s all ease-in-out;
+    text-decoration: line-through;
+}
+
+.completed_task li :nth-child(2) {
+    display: none !important;
+
+}
+
+
+/* =====================btns============ */
+
+button {
+    /* background-color: white; */
+    padding:11px;
+    border: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    color: #1079cf;
+    margin-left: 3px;
+    border: 2px solid #1079cf;
+
+}
+
+button:hover {
+    /* background-color: #FFF; */
+    color: white;
+    background-color: #1079cf;
+
+    transition: 0.5s all ease-in-out;
+}
+
+.dltbtn {
+    /* margin-left: 450px; */
+    position: absolute;
+    right: 18px;
+    top: 33%;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    color: #BD2031;
+
+}
+
+.dltbtn:hover {
+    color: red;
+    font-size: 19px;
+    transition: 0.5s all ease-in-out;
+
+}
+
+.cmpbtn:hover {
+    color: #34d3a6;
+    font-size: 19px;
+    transition: 0.5s all ease-in-out;
+    cursor: pointer;
+
+}
+
+.uncmpbtn:hover {
+    color: #34d3a6;
+    font-size: 19px;
+    transition: 0.5s all ease-in-out;
+    cursor: pointer;
+
+}
+
+.cmpbtn {
+    position: absolute;
+    right: 45px;
+    top: 33%;
+    font-weight: bold;
+    font-size: 18px;
+    color: #38ab8a;
+
+}
+
+.uncmpbtn {
+    position: absolute;
+    right: 45px;
+    top: 33%;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    color: #2234AE;
+
+}
+/* ===================icons====== */

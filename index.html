@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo List</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="main container">
+    <div class="header">
+      <div class="title">
+        <h1>Todo List</h1>
+      </div>
+    </div>
+    <div class="inputfield">
+      <input id="myInput" type="text" title="click to enter text" placeholder="Enter text here" />
+      <button class="add" title="Add to list" onclick="newList()" id="addMe">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+
+    <div class="todo">
+      <div class="reguler_task">
+        <h1>Reguler Task</h1>
+        <ul id="myUl"></ul>
+      </div>
+
+      <div class="completed_task">
+        <h1>Completed Tasks</h1>
+        <ul id="myUl1"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function newList() {
+      // take a user input
+
+      var inputValue = document.getElementById("myInput").value;
+
+      // Get todos from local storage
+      let todos = JSON.parse(window.localStorage.getItem("todos"));
+
+      if (inputValue !== "") {
+        // first check todos is exist in local storeage
+        if (todos) {
+          todos.push({
+            id: todos.length + 1,
+            itemName: inputValue,
+            status: "uncomplete",
+          });
+          window.localStorage.setItem("todos", JSON.stringify(todos));
+        } else {
+          window.localStorage.setItem("todos", JSON.stringify([]));
+          let todos = JSON.parse(window.localStorage.getItem("todos"));
+          todos.push({
+            id: 1,
+            itemName: inputValue,
+            status: "uncomplete",
+          });
+          window.localStorage.setItem("todos", JSON.stringify(todos));
+        }
+
+        document.getElementById("myUl").innerText = "";
+
+        todos = JSON.parse(window.localStorage.getItem("todos"));
+        todos.map((todo) => todoItems(todo.itemName));
+      } else {
+        alert("Please enter the value.");
+        return;
+      }
+    }
+
+    function onreload() {
+      todos = JSON.parse(window.localStorage.getItem("todos"));
+      todos.map((todo) => todoItems(todo.itemName));
+    }
+
+    function todoItems(value) {
+      var li = document.createElement("li");
+      li.className = "todo_items";
+      var t = document.createTextNode(value);
+      li.appendChild(t);
+
+      // create Delete button
+      let ele = document.getElementById("myUl");
+      let deleteBtn = document.createElement("i");
+      deleteBtn.title = " Delete Task";
+      deleteBtn.className = "fa-solid fa-trash dltbtn ";
+
+      deleteBtn.onclick = function () {
+        let listItem = this.parentNode;
+        listItem.parentNode.removeChild(listItem);
+      };
+      li.appendChild(deleteBtn);
+
+      // Create Complite
+
+      let el2 = document.getElementById("myUl");
+      let completeBtn = document.createElement("i");
+      // completeBtn.textContent = "complete"
+      completeBtn.className = "fa-solid fa-check cmpbtn ";
+      completeBtn.title = "complete";
+      completeBtn.title.className = "tooltip";
+      completeBtn.onclick = function () {
+        let listItem = this.parentNode;
+        listItem.parentNode.removeChild(listItem);
+
+        // Move to completed tasks
+        var completedList = document.getElementById("myUl1");
+        var uncompleteBtn = createUncompleteButton(listItem);
+        listItem.appendChild(uncompleteBtn);
+        completedList.appendChild(listItem);
+      };
+      li.appendChild(completeBtn);
+
+      document.getElementById("myUl").appendChild(li);
+
+      document.getElementById("myInput").value = "";
+    }
+
+    window.onload = onreload();
+
+    function createUncompleteButton(listItem) {
+      var uncompleteBtn = document.createElement("i");
+      // uncompleteBtn.appendChild(document.createTextNode("Uncomplete"));
+      // uncompleteBtn.classList.add("uncmpbtn"); // Add your class name here
+      uncompleteBtn.className = "fa-solid fa-rotate-left uncmpbtn";
+      uncompleteBtn.title = " Re-do";
+      uncompleteBtn.title.className = "tooltip";
+      uncompleteBtn.onclick = function () {
+        var completedListItem = this.parentNode;
+        completedListItem.removeChild(this);
+        // Move back to the original tasks list
+        var originalList = document.getElementById("myUl");
+        originalList.appendChild(completedListItem);
+        // completedListItem.addChild(completedListItem.lastChild);
+
+        // Remove the "Completed" button from the completed tasks list
+        completedListItem.removeChild(completedListItem.children[2]);
+      };
+      return uncompleteBtn;
+    }
+  </script>
+</body>
+
+</html>

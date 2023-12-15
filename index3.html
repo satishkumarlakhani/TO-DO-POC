@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+
+<body>
+
+    <div class="main container">
+        <div class="header">
+            <div class="title">
+                <h1>Todo List</h1>
+            </div>
+            <div class="inputfield">
+                <input id="myInput" type="text" placeholder="Enter text here">
+                <button class="submit btn" onclick="newList()">ADD LIST</button>
+            </div>
+        </div>
+
+        <div class="todo">
+            <div class="reguler_task">
+                <h1>Regular Task</h1>
+                <ul id="myUl"></ul>
+            </div>
+
+            <div class="completed_task">
+                <h1>Completed Tasks</h1>
+                <ul id="myUl1"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function newList() {
+            var inputValue = document.getElementById("myInput").value.trim();
+
+            if (inputValue !== '') {
+                localStorage.setItem(inputValue, inputValue);
+
+                var li = createListItem(inputValue);
+                document.getElementById("myUl").appendChild(li);
+
+                document.getElementById("myInput").value = '';
+            } else {
+                alert("Please enter the value.");
+            }
+        }
+
+        function createListItem(value) {
+            var li = document.createElement("li");
+            li.textContent = value;
+
+            var deleteBtn = createButton("Delete", "dltbtn", function () {
+                var listItem = this.parentNode;
+                listItem.parentNode.removeChild(listItem);
+                localStorage.removeItem(value);
+            });
+            li.appendChild(deleteBtn);
+
+            var completeBtn = createButton("Complete", "cmpbtn", function () {
+                var listItem = this.parentNode;
+                listItem.parentNode.removeChild(listItem);
+
+                var completedList = document.getElementById("myUl1");
+                var uncompleteBtn = createButton("Uncomplete", "uncmpbtn", function () {
+                    var completedListItem = this.parentNode;
+                    completedListItem.removeChild(this);
+                    document.getElementById("myUl").appendChild(completedListItem);
+                });
+                li.appendChild(uncompleteBtn);
+                completedList.appendChild(listItem);
+            });
+            li.appendChild(completeBtn);
+
+            return li;
+        }
+
+        function createButton(text, className, clickHandler) {
+            var button = document.createElement("button");
+            button.textContent = text;
+            button.className = className;
+            button.onclick = clickHandler;
+            return button;
+        }
+
+        function onreload() {
+            var keys = Object.keys(localStorage);
+
+            keys.forEach(function (key) {
+                var li = createListItem(key);
+                document.getElementById("myUl").appendChild(li);
+            });
+        }
+
+        window.onload = onreload;
+    </script>
+
+</body>
+
+</html>

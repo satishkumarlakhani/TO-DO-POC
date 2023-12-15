@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<div class="main container">
+    <div class="header">
+        <div class="title">
+            <h1>Todo List</h1>
+        </div>
+        <div class="inputfield">
+            <input id="myInput" type="text" placeholder="Enter text here">
+            <button class="submit btn" onclick="newList()" id="addMe">ADD LIST</button>
+        </div>
+    </div>
+    <div class="todo">
+        <ul id="myUl"></ul>
+    </div>
+    <!-- Add a section for completed tasks -->
+    <div class="completed-tasks">
+        <h2>Completed Tasks</h2>
+        <ul id="completedUl"></ul>
+        <!-- Add an "Uncompleted" button -->
+        <button class="uncompleted-btn" onclick="moveToUncompleted()">Uncompleted</button>
+    </div>
+</div>
+
+<script>
+    function newList() {
+        var inputValue = document.getElementById("myInput").value;
+        if (inputValue === '') {
+            alert("You must enter a task!");
+            return;
+        }
+        var li = document.createElement("li");
+        var t = document.createTextNode(inputValue);
+        li.appendChild(t);
+
+        // Add a delete button
+        var deleteBtn = document.createElement("button");
+        deleteBtn.appendChild(document.createTextNode("Delete"));
+        deleteBtn.classList.add("dltbtn");
+        deleteBtn.onclick = function() {
+            var listItem = this.parentNode;
+            listItem.parentNode.removeChild(listItem);
+        };
+        li.appendChild(deleteBtn);
+
+        // Add a mark as completed button
+        var completeBtn = document.createElement("button");
+        completeBtn.appendChild(document.createTextNode("Completed"));
+        completeBtn.classList.add("cmpbtn");
+        completeBtn.onclick = function() {
+            var listItem = this.parentNode;
+            listItem.classList.toggle("completed");
+            // Move the completed task to the completed tasks list
+            document.getElementById("completedUl").appendChild(listItem);
+            // Add an "Uncompleted" button to the completed item
+            addUncompletedButton(listItem);
+        };
+        li.appendChild(completeBtn);
+
+        document.getElementById("myUl").appendChild(li);
+        document.getElementById("myInput").value = '';
+    }
+
+    function addUncompletedButton(listItem) {
+        var uncompletedBtn = document.createElement("button");
+        uncompletedBtn.appendChild(document.createTextNode("Uncompleted"));
+        uncompletedBtn.classList.add("uncompleted-btn");
+        uncompletedBtn.onclick = function() {
+            listItem.classList.remove("completed");
+            // Move the uncompleted task back to the original list
+            document.getElementById("myUl").appendChild(listItem);
+            // Remove the uncompleted button to prevent further uncompletion
+            listItem.removeChild(uncompletedBtn);
+        };
+        listItem.appendChild(uncompletedBtn);
+    }
+
+    function moveToUncompleted() {
+        var completedList = document.getElementById("completedUl");
+        var completedItems = completedList.getElementsByTagName("li");
+
+        for (var i = 0; i < completedItems.length; i++) {
+            var listItem = completedItems[i];
+            // Add an "Uncompleted" button to each completed item
+            addUncompletedButton(listItem);
+        }
+        // Clear the completed tasks list
+        completedList.innerHTML = '';
+    }
+</script>
+
+</body>
+</html>
