@@ -24,29 +24,23 @@
         <i class="fa-solid fa-plus"></i>
       </button>
     </div>
-
     <div class="todo">
       <div class="reguler_task">
         <h1>Reguler Task</h1>
         <ul id="myUl"></ul>
       </div>
-
       <div class="completed_task">
         <h1>Completed Tasks</h1>
         <ul id="myUl1"></ul>
       </div>
     </div>
   </div>
-
   <script>
     function newList() {
       // take a user input
-
       var inputValue = document.getElementById("myInput").value;
-
       // Get todos from local storage
       let todos = JSON.parse(window.localStorage.getItem("todos"));
-
       if (inputValue !== "") {
         // first check todos is exist in local storeage
         if (todos) {
@@ -66,9 +60,7 @@
           });
           window.localStorage.setItem("todos", JSON.stringify(todos));
         }
-
         document.getElementById("myUl").innerText = "";
-
         todos = JSON.parse(window.localStorage.getItem("todos"));
         todos.map((todo) => todoItems(todo.itemName));
       } else {
@@ -76,18 +68,14 @@
         return;
       }
     }
-
     function onreload() {
       todos = JSON.parse(window.localStorage.getItem("todos"));
       todos.map((todo) => todoItems(todo.itemName));
     }
-
     function todoItems(value) {
       var li = document.createElement("li");
       li.className = "todo_items";
-      var t = document.createTextNode(value);
-      li.appendChild(t);
-
+      li.appendChild(document.createTextNode(value));
       // create Delete button
       let ele = document.getElementById("myUl");
       let deleteBtn = document.createElement("i");
@@ -99,19 +87,16 @@
         listItem.parentNode.removeChild(listItem);
       };
       li.appendChild(deleteBtn);
-
       // Create Complite
-
       let el2 = document.getElementById("myUl");
       let completeBtn = document.createElement("i");
       // completeBtn.textContent = "complete"
-      completeBtn.className = "fa-solid fa-check cmpbtn ";
+      completeBtn.className = "fa-solid fa-circle-check cmpbtn ";
       completeBtn.title = "complete";
       completeBtn.title.className = "tooltip";
       completeBtn.onclick = function () {
         let listItem = this.parentNode;
         listItem.parentNode.removeChild(listItem);
-
         // Move to completed tasks
         var completedList = document.getElementById("myUl1");
         var uncompleteBtn = createUncompleteButton(listItem);
@@ -119,14 +104,10 @@
         completedList.appendChild(listItem);
       };
       li.appendChild(completeBtn);
-
       document.getElementById("myUl").appendChild(li);
-
       document.getElementById("myInput").value = "";
     }
-
     window.onload = onreload();
-
     function createUncompleteButton(listItem) {
       var uncompleteBtn = document.createElement("i");
       // uncompleteBtn.appendChild(document.createTextNode("Uncomplete"));
@@ -141,7 +122,6 @@
         var originalList = document.getElementById("myUl");
         originalList.appendChild(completedListItem);
         // completedListItem.addChild(completedListItem.lastChild);
-
         // Remove the "Completed" button from the completed tasks list
         completedListItem.removeChild(completedListItem.children[2]);
       };
